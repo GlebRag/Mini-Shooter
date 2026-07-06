@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4477b23b0e1461459383d4b6321d21a, type: 3}
+  m_Name: Rifle
+  m_EditorClassIdentifier: Assembly-CSharp::Runtime.Weapons.Configs.WeaponConfig
+  _weaponName: Rifle
+  _damage: 8
+  _fireRate: 10
+  _range: 60
+  _spread: 1.8
+  _reloadTime: 7
+  _magazineSize: 30
+  _isAutomatic: 1
+  _projectilesPerShot: 1
+  _projectilePrefab: {fileID: 2072779641786166606, guid: e804ffd958cf38843bbab550d9ca96bd, type: 3}
