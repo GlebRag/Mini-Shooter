@@ -5,7 +5,6 @@ namespace Runtime.Combat
 {
     public class Health
     {
-        // Передаем текущее и максимальное здоровье для удобного обновления UI
         public event Action<float, float> OnChanged;
         public event Action OnDied;
 

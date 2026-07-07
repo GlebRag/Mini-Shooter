@@ -15,7 +15,7 @@ MonoBehaviour:
   _weaponName: Pistol
   _damage: 15
   _fireRate: 3
-  _range: 40
+  _range: 90
   _spread: 0.7
   _reloadTime: 4
   _magazineSize: 12

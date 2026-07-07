@@ -14,7 +14,6 @@ namespace Runtime.Combat
         private Rigidbody _rigidbody;
         private Action<Projectile> _onRelease;
 
-        // Предохранитель от двойного возврата в пул
         private bool _isReleased;
 
         private void Awake()
@@ -35,7 +34,7 @@ namespace Runtime.Combat
             _onRelease = onRelease;
             _startPosition = transform.position;
 
-            // Сбрасываем флаг, когда снаряд достают из пула для нового выстрела
+            // Сброс флага, когда снаряд достают из пула для нового выстрела
             _isReleased = false;
 
             _rigidbody.linearVelocity = transform.forward * _speed;
@@ -61,7 +60,6 @@ namespace Runtime.Combat
 
         private void Release()
         {
-            // Если снаряд УЖЕ был возвращен в пул в этом кадре — игнорируем повторный вызов
             if (_isReleased) return;
             _isReleased = true;
 

@@ -8,15 +8,15 @@ namespace Runtime.Weapons.Configs
         [Header("Base Parameters")]
         [SerializeField] private string _weaponName;
         [SerializeField] private float _damage = 10f;
-        [SerializeField] private float _fireRate = 2f;       // Выстрелов в секунду
+        [SerializeField] private float _fireRate = 2f;
         [SerializeField] private float _range = 50f;
-        [SerializeField] private float _spread = 2f;         // Разброс в градусах
+        [SerializeField] private float _spread = 2f;
         [SerializeField] private float _reloadTime = 1.5f;
         [SerializeField] private int _magazineSize = 30;
 
         [Header("Mechanics")]
-        [SerializeField] private bool _isAutomatic;         // Зажатие мыши или клики
-        [SerializeField] private int _projectilesPerShot = 1; // 1 для пистолета/автомата, много для дробовика
+        [SerializeField] private bool _isAutomatic;
+        [SerializeField] private int _projectilesPerShot = 1;
         [SerializeField] private GameObject _projectilePrefab;
 
         public string WeaponName => _weaponName;

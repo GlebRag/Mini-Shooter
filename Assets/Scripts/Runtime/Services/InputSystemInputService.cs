@@ -10,10 +10,9 @@ namespace Runtime.Services.Input
         public Vector2 MoveAxis => _gameInput.Player.Move.ReadValue<Vector2>();
         public Vector2 LookAxis => _gameInput.Player.Look.ReadValue<Vector2>();
 
-        // Проверка: кнопка удерживается (подходит для автомата)
         public bool IsShootPressed => Mouse.current != null && Mouse.current.leftButton.isPressed;
         public bool IsReloadPressed => _gameInput.Player.Reload.triggered;
-        // Проверка: кнопка только что нажата (подходит для пистолета/дробовика)
+
         public bool IsShootClicked => Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame;
 
         public int SelectedWeaponSlot
@@ -22,9 +21,9 @@ namespace Runtime.Services.Input
             {
                 if (Keyboard.current == null) return -1;
 
-                if (Keyboard.current.digit1Key.wasPressedThisFrame) return 0; // Пистолет
-                if (Keyboard.current.digit2Key.wasPressedThisFrame) return 1; // Дробовик
-                if (Keyboard.current.digit3Key.wasPressedThisFrame) return 2; // Автомат
+                if (Keyboard.current.digit1Key.wasPressedThisFrame) return 0; 
+                if (Keyboard.current.digit2Key.wasPressedThisFrame) return 1; 
+                if (Keyboard.current.digit3Key.wasPressedThisFrame) return 2;
 
                 return -1;
             }

@@ -13,10 +13,8 @@ namespace Runtime.Combat.Pool
         {
             _prefab = prefab;
 
-            // Создаем пустой объект-контейнер, чтобы снаряды в иерархии Unity не мозолили глаза
             _poolRoot = new GameObject("[Projectile Pool]").transform;
 
-            // Инициализируем стандартный пул Unity
             _pool = new ObjectPool<Projectile>(
                 createFunc: CreateInstance,
                 actionOnGet: OnGetFromPool,
@@ -27,16 +25,13 @@ namespace Runtime.Combat.Pool
                 maxSize: maxCapacity
             );
 
-            // Прогрев пула (Pre-warm): принудительно создаем стартовые 50 снарядов
             PreWarm(initialCapacity);
         }
 
         public void Spawn(Vector3 position, Quaternion rotation, float damage, float range)
         {
-            // Берем готовый снаряд из пула
             Projectile projectile = _pool.Get();
 
-            // Настраиваем его позицию и физику
             projectile.transform.SetPositionAndRotation(position, rotation);
             projectile.Initialize(damage, range, ReturnToPool);
         }
@@ -46,7 +41,6 @@ namespace Runtime.Combat.Pool
             _pool.Release(projectile);
         }
 
-        // --- Колбэки управления элементами пула ---
 
         private Projectile CreateInstance()
         {
@@ -76,13 +70,11 @@ namespace Runtime.Combat.Pool
         {
             Projectile[] tempArray = new Projectile[count];
 
-            // Достаем 50 штук (они создаются в памяти)
             for (int i = 0; i < count; i++)
             {
                 tempArray[i] = _pool.Get();
             }
 
-            // Тут же возвращаем их обратно спать
             for (int i = 0; i < count; i++)
             {
                 _pool.Release(tempArray[i]);

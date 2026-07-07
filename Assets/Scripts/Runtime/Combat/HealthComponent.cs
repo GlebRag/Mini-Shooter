@@ -10,12 +10,10 @@ namespace Runtime.Combat
         [Header("Events (Optional)")]
         [SerializeField] private bool _destroyOnDeath = true;
 
-        // Предоставляем доступ к чистой логике для других систем (например, для UI полоски здоровья)
         public Health Health { get; private set; }
 
         private void Awake()
         {
-            // Инициализируем чистую C#-логику здоровья
             Health = new Health(_maxHealth);
         }
 
@@ -29,7 +27,6 @@ namespace Runtime.Combat
             Health.OnDied -= HandleDeath;
         }
 
-        // Реализация интерфейса IDamageable
         public void TakeDamage(float damage)
         {
             Health.TakeDamage(damage);

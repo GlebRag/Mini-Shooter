@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using Runtime.Combat; // Добавили
+using Runtime.Combat.Pool;
+using Runtime.Enemy;
 using Runtime.Player;
 using Runtime.Services.Input;
-using Runtime.Combat.Pool;
-using Runtime.Combat; // Добавили
 using Runtime.UI;     // Добавили
+using UnityEngine;
 
 namespace Runtime.Infrastructure
 {
@@ -29,13 +30,18 @@ namespace Runtime.Infrastructure
             _inputService = new InputSystemInputService();
             _projectileFactory = new ProjectileFactory(_projectilePrefab, initialCapacity: 50, maxCapacity: 150);
 
-            // Инициализируем логические компоненты игрока
             _playerMovement.Construct(_inputService);
             _playerLook.Construct(_inputService);
             _playerWeaponHandler.Construct(_inputService, _projectileFactory);
 
-            // Инициализируем наш интерфейс, связав его с логикой здоровья и инвентаря оружия напрямую (DI)[cite: 1]
             _playerHUD.Initialize(_playerHealthComponent.Health, _playerWeaponHandler.Inventory);
+
+            //Плохо, но быстро
+            EnemyAI[] enemiesOnScene = FindObjectsByType<EnemyAI>(FindObjectsSortMode.None);
+            foreach (var enemy in enemiesOnScene)
+            {
+                enemy.Construct(_playerMovement.transform, _projectileFactory);
+            }
         }
 
         private void OnDestroy()
