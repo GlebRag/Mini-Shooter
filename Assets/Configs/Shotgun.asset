@@ -15,7 +15,7 @@ MonoBehaviour:
   _weaponName: Shotgun
   _damage: 10
   _fireRate: 1
-  _range: 30
+  _range: 70
   _spread: 4
   _reloadTime: 5
   _magazineSize: 2

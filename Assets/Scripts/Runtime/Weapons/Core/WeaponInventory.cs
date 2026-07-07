@@ -17,7 +17,6 @@ namespace Runtime.Weapons.Core
         {
             _weapons.Add(new Weapon(config));
 
-            // Автоматически выбираем первую добавленную пушку
             if (_currentSlotIndex == -1)
             {
                 SelectSlot(0);

@@ -10,7 +10,7 @@ namespace Runtime.Player
     public class PlayerWeaponHandler : MonoBehaviour
     {
         [Header("Setup")]
-        [SerializeField] private Camera _mainCamera; // Ссылка на главную камеру для расчета прицела
+        [SerializeField] private Camera _mainCamera; 
         [SerializeField] private Transform _firePoint;
         [SerializeField] private WeaponConfig[] _initialWeapons;
 
@@ -18,7 +18,6 @@ namespace Runtime.Player
         private WeaponInventory _inventory;
         private ProjectileFactory _projectileFactory;
 
-        // Экспонируем инвентарь наружу, чтобы корень композиции мог передать его в UI
         public WeaponInventory Inventory => _inventory;
 
         public void Construct(IInputService inputService, ProjectileFactory projectileFactory)
@@ -44,14 +43,10 @@ namespace Runtime.Player
             int slotInput = _inputService.SelectedWeaponSlot;
             if (slotInput != -1)
             {
-                // 1. Старой пушке отменяем перезарядку
                 _inventory.ActiveWeapon?.CancelReload();
 
-                // 2. Переключаем слот на новую пушку
                 _inventory.SelectSlot(slotInput);
 
-                // 3. НОВАЯ СТРОЧКА: Говорим новой пушке, что её достали.
-                // Если она пустая, она сама мгновенно включит перезарядку!
                 _inventory.ActiveWeapon?.OnEquip();
             }
 
@@ -72,25 +67,22 @@ namespace Runtime.Player
 
         private void SpawnProjectiles(Weapon weapon, int count)
         {
-            // 1. Пускаем луч из центра экрана (координаты 0.5, 0.5)
+
             Ray ray = _mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
             Vector3 targetPoint;
 
-            // Кидаем луч на максимальную дальность оружия
             if (Physics.Raycast(ray, out RaycastHit hit, weapon.Config.Range))
             {
-                targetPoint = hit.point; // Точка физического столкновения с препятствием/врагом
+                targetPoint = hit.point; 
             }
             else
             {
-                targetPoint = ray.GetPoint(weapon.Config.Range); // Точка в воздухе на максимальной дистанции
+                targetPoint = ray.GetPoint(weapon.Config.Range); 
             }
 
-            // 2. Рассчитываем базовое направление от дула оружия до точки прицела
             Vector3 fireDirection = (targetPoint - _firePoint.position).normalized;
             Quaternion baseRotation = Quaternion.LookRotation(fireDirection);
 
-            // 3. Спавним пули с учетом разброса относительно этого направления
             for (int i = 0; i < count; i++)
             {
                 Quaternion spreadRotation = Quaternion.Euler(

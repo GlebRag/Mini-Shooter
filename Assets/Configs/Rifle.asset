@@ -15,7 +15,7 @@ MonoBehaviour:
   _weaponName: Rifle
   _damage: 8
   _fireRate: 10
-  _range: 60
+  _range: 120
   _spread: 1.8
   _reloadTime: 7
   _magazineSize: 30

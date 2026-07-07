@@ -37,8 +37,6 @@ namespace Runtime.Weapons.Core
         }
         public void OnEquip()
         {
-            // Если оружие достали, а в магазине круглый ноль — 
-            // принудительно и автоматически запускаем перезарядку заново
             if (CurrentAmmo <= 0)
             {
                 StartReload();
@@ -49,17 +47,14 @@ namespace Runtime.Weapons.Core
         {
             projectilesToSpawn = 0;
 
-            // ИСПРАВЛЕНО: Теперь просто выходим, если стрелять нельзя (идёт перезарядка, КД между выстрелами или патроны на нуле)
             if (IsReloading || currentTime < _nextFireTime || CurrentAmmo <= 0) return false;
 
-            // Производим выстрел
             CurrentAmmo--;
             _nextFireTime = currentTime + (1f / _config.FireRate);
             projectilesToSpawn = _config.ProjectilesPerShot;
 
             OnShotFired?.Invoke();
 
-            // ИСПРАВЛЕНО: Автоматически запускаем перезарядку сразу же, как только ушёл последний патрон!
             if (CurrentAmmo <= 0)
             {
                 StartReload();
@@ -69,14 +64,11 @@ namespace Runtime.Weapons.Core
         }
         public void CancelReload()
         {
-            // Если оружие и так не перезаряжается — ничего не делаем
             if (!IsReloading) return;
 
             IsReloading = false;
             _reloadTimer = 0f;
 
-            // Оповещаем UI, чтобы он убрал красный фон и таймер, 
-            // но патроны останутся пустыми, так как CompleteReload() не вызывался
             OnReloadFinished?.Invoke();
         }
 

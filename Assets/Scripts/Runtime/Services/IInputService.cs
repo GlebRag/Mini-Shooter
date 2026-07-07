@@ -9,6 +9,6 @@ namespace Runtime.Services.Input
         bool IsShootPressed { get; }
         bool IsShootClicked { get; }
         int SelectedWeaponSlot { get; }
-        bool IsReloadPressed { get; } // Добавили новое свойство
+        bool IsReloadPressed { get; }
     }
 }

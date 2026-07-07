@@ -27,12 +27,10 @@ namespace Runtime.Player
 
             Vector2 lookInput = _inputService.LookAxis * _sensitivity;
 
-            // Поворот камеры по вертикали (вверх/вниз) с ограничением
             _verticalRotation -= lookInput.y;
             _verticalRotation = Mathf.Clamp(_verticalRotation, _minVerticalAngle, _maxVerticalAngle);
             _cameraTransform.localRotation = Quaternion.Euler(_verticalRotation, 0f, 0f);
 
-            // Поворот всего тела игрока по горизонтали (влево/вправо)
             transform.Rotate(Vector3.up * lookInput.x);
         }
     }
