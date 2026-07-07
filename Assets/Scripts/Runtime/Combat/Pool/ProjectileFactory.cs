@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Runtime.Combat.Effects;
+using UnityEngine;
 using UnityEngine.Pool;
 
 namespace Runtime.Combat.Pool
@@ -28,19 +29,19 @@ namespace Runtime.Combat.Pool
             PreWarm(initialCapacity);
         }
 
-        public void Spawn(Vector3 position, Quaternion rotation, float damage, float range)
+        public void Spawn(Vector3 position, Quaternion rotation, float damage, float range, StatusEffectConfig[] effectsOnHit = null)
         {
             Projectile projectile = _pool.Get();
 
             projectile.transform.SetPositionAndRotation(position, rotation);
-            projectile.Initialize(damage, range, ReturnToPool);
+
+            projectile.Initialize(damage, range, effectsOnHit, ReturnToPool);
         }
 
         private void ReturnToPool(Projectile projectile)
         {
             _pool.Release(projectile);
         }
-
 
         private Projectile CreateInstance()
         {

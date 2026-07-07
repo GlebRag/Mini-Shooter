@@ -12,7 +12,6 @@ namespace Runtime.Services.Input
 
         public bool IsShootPressed => Mouse.current != null && Mouse.current.leftButton.isPressed;
         public bool IsReloadPressed => _gameInput.Player.Reload.triggered;
-
         public bool IsShootClicked => Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame;
 
         public int SelectedWeaponSlot
@@ -21,9 +20,13 @@ namespace Runtime.Services.Input
             {
                 if (Keyboard.current == null) return -1;
 
-                if (Keyboard.current.digit1Key.wasPressedThisFrame) return 0; 
-                if (Keyboard.current.digit2Key.wasPressedThisFrame) return 1; 
-                if (Keyboard.current.digit3Key.wasPressedThisFrame) return 2;
+                for (int i = 0; i < 9; i++)
+                {
+                    Key targetKey = (Key)((int)Key.Digit1 + i);
+
+                    if (Keyboard.current[targetKey].wasPressedThisFrame)
+                        return i;
+                }
 
                 return -1;
             }

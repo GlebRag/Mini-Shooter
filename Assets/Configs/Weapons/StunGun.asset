@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4477b23b0e1461459383d4b6321d21a, type: 3}
+  m_Name: StunGun
+  m_EditorClassIdentifier: Assembly-CSharp::Runtime.Weapons.Configs.WeaponConfig
+  _weaponName: StunGun
+  _damage: 0
+  _fireRate: 3
+  _range: 90
+  _spread: 0
+  _reloadTime: 5
+  _magazineSize: 1
+  _isAutomatic: 0
+  _projectilesPerShot: 1
+  _projectilePrefab: {fileID: 2072779641786166606, guid: e804ffd958cf38843bbab550d9ca96bd, type: 3}
+  _effectsOnHit:
+  - {fileID: 11400000, guid: 2444e09e4d4ae2f46a2d78cee5bb44b4, type: 2}
