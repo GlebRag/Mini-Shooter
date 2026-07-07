@@ -36,7 +36,7 @@ namespace Runtime.Infrastructure
 
             _playerHUD.Initialize(_playerHealthComponent.Health, _playerWeaponHandler.Inventory);
 
-            //Плохо, но быстро
+            //Плохо, но быстро сделано
             EnemyAI[] enemiesOnScene = FindObjectsByType<EnemyAI>(FindObjectsSortMode.None);
             foreach (var enemy in enemiesOnScene)
             {

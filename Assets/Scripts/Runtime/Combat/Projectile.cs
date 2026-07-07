@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Assets.Scripts.Runtime.Combat.Effects.Config;
+using Runtime.Combat.Effects;
+using System;
 using UnityEngine;
 
 namespace Runtime.Combat
@@ -14,6 +16,8 @@ namespace Runtime.Combat
         private Rigidbody _rigidbody;
         private Action<Projectile> _onRelease;
 
+        private StatusEffectConfig[] _effectsOnHit;
+
         private bool _isReleased;
 
         private void Awake()
@@ -27,14 +31,14 @@ namespace Runtime.Combat
             }
         }
 
-        public void Initialize(float damage, float range, Action<Projectile> onRelease)
+        public void Initialize(float damage, float range, StatusEffectConfig[] effectsOnHit, Action<Projectile> onRelease)
         {
             _damage = damage;
             _maxRange = range;
+            _effectsOnHit = effectsOnHit;
             _onRelease = onRelease;
             _startPosition = transform.position;
 
-            // Сброс флага, когда снаряд достают из пула для нового выстрела
             _isReleased = false;
 
             _rigidbody.linearVelocity = transform.forward * _speed;
@@ -50,9 +54,26 @@ namespace Runtime.Combat
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent<IDamageable>(out var damageable))
+            if (_isReleased) return;
+
+
+            if (other.TryGetComponent(out IDamageable damageable))
             {
                 damageable.TakeDamage(_damage);
+            }
+
+            if (other.TryGetComponent(out EffectsManager effectsManager))
+            {
+                if (_effectsOnHit != null)
+                {
+                    foreach (StatusEffectConfig effectConfig in _effectsOnHit)
+                    {
+                        if (effectConfig != null)
+                        {
+                            effectsManager.ApplyEffect(effectConfig);
+                        }
+                    }
+                }
             }
 
             Release();

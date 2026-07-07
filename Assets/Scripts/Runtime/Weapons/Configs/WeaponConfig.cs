@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Runtime.Combat.Effects;
+using UnityEngine;
 
 namespace Runtime.Weapons.Configs
 {
@@ -19,6 +20,9 @@ namespace Runtime.Weapons.Configs
         [SerializeField] private int _projectilesPerShot = 1;
         [SerializeField] private GameObject _projectilePrefab;
 
+        [Header("Effects Settings")]
+        [SerializeField] private StatusEffectConfig[] _effectsOnHit;
+        public StatusEffectConfig[] EffectsOnHit => _effectsOnHit;
         public string WeaponName => _weaponName;
         public float Damage => _damage;
         public float FireRate => _fireRate;

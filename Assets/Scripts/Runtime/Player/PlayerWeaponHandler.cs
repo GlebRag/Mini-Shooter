@@ -2,7 +2,6 @@
 using Runtime.Services.Input;
 using Runtime.Weapons.Configs;
 using Runtime.Weapons.Core;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 namespace Runtime.Player
@@ -10,7 +9,7 @@ namespace Runtime.Player
     public class PlayerWeaponHandler : MonoBehaviour
     {
         [Header("Setup")]
-        [SerializeField] private Camera _mainCamera; 
+        [SerializeField] private Camera _mainCamera;
         [SerializeField] private Transform _firePoint;
         [SerializeField] private WeaponConfig[] _initialWeapons;
 
@@ -44,9 +43,7 @@ namespace Runtime.Player
             if (slotInput != -1)
             {
                 _inventory.ActiveWeapon?.CancelReload();
-
                 _inventory.SelectSlot(slotInput);
-
                 _inventory.ActiveWeapon?.OnEquip();
             }
 
@@ -67,17 +64,16 @@ namespace Runtime.Player
 
         private void SpawnProjectiles(Weapon weapon, int count)
         {
-
             Ray ray = _mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
             Vector3 targetPoint;
 
             if (Physics.Raycast(ray, out RaycastHit hit, weapon.Config.Range))
             {
-                targetPoint = hit.point; 
+                targetPoint = hit.point;
             }
             else
             {
-                targetPoint = ray.GetPoint(weapon.Config.Range); 
+                targetPoint = ray.GetPoint(weapon.Config.Range);
             }
 
             Vector3 fireDirection = (targetPoint - _firePoint.position).normalized;
@@ -93,7 +89,13 @@ namespace Runtime.Player
 
                 Quaternion finalRotation = baseRotation * spreadRotation;
 
-                _projectileFactory.Spawn(_firePoint.position, finalRotation, weapon.Config.Damage, weapon.Config.Range);
+                _projectileFactory.Spawn(
+                    _firePoint.position,
+                    finalRotation,
+                    weapon.Config.Damage,
+                    weapon.Config.Range,
+                    weapon.Config.EffectsOnHit
+                );
             }
         }
     }
